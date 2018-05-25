@@ -1,0 +1,57 @@
+-- What was the hottest day in our data set? Where was that?
+SELECT
+    Date,
+	ZIP,
+    max(MaxTemperatureF) MaxTemperatureF
+FROM
+    weather
+
+Returns:
+Date	ZIP	MaxTemperatureF
+11/17/2015	94063	134
+
+-- How many trips started at each station?
+
+SELECT
+    start_station,
+	count(*) trip_id
+FROM
+    trips
+GROUP BY 1
+
+Result:
+start_station	trip_id
+2nd at Folsom	7464
+2nd at South Park	7722
+...
+University and Emerson	490
+Washington at Kearny	2844
+Yerba Buena Center of the Arts (3rd @ Howard)	3460
+
+--What's the shortest trip that happened?
+SELECT
+    min(duration)
+FROM
+    trips
+    
+Result: 60.
+
+What is the average trip duration, by end station?
+SELECT
+	end_station,
+    avg(duration) duration
+FROM
+    trips
+Group By 1
+
+Result:
+end_station	duration
+2nd at Folsom	557.0507602
+2nd at South Park	531.5899036
+...
+University and Emerson	4710.897727
+Washington at Kearny	1061.885061
+Yerba Buena Center of the Arts (3rd @ Howard)	757.0955141
+
+
+
