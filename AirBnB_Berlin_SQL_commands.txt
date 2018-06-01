@@ -1,0 +1,91 @@
+-- What's the most expensive listing? What else can you tell me about the listing?
+SELECT 
+*,
+max(price) 
+FROM 
+listings
+
+-- What neighborhoods seem to be the most popular?
+SELECT 
+neighbourhood_group, 
+AVG(availability_365) avg_availability  
+FROM 
+listings 
+GROUP BY 1 
+ORDER BY avg_availability
+
+-- What time of year is the cheapest time to go to your city?
+---Define average price 
+SELECT 
+min(price) as min_price,
+max(price) as max_price, 
+avg(price) 
+FROM listings
+---Analyse avalability of apartments by number of reviews
+---Choose apartments that are cheaper than the average
+WITH 
+MonthlyReviews 
+As(
+SELECT 
+listing_id,
+count(listing_id) as reviews_total, 
+strftime("%m", Date) as ''Month'' 
+FROM 
+reviews 
+GROUP BY 1,3
+), 
+
+CheapPlaces 
+AS (
+SELECT 
+listings.id, 
+listings.price 
+FROM 
+listings 
+WHERE listings.price < 58 
+)
+
+SELECT 
+MonthlyReviews.Month, 
+AVG(MonthlyReviews.reviews_total) as reviews_total 
+FROM 
+CheapPlaces 
+JOIN 
+MonthlyReviews 
+ON 
+CheapPlaces.id = MonthlyReviews.listing_id 
+GROUP BY 1
+
+
+-- What is the cheapest time to visit?
+with
+MonthlyReviews
+As(
+	SELECT 
+	listing_id,
+	count(listing_id) as reviews_total,
+	strftime("%m", Date) as 'Month' 
+	FROM reviews
+	group by 1,3
+),
+
+CheapPlaces
+AS (
+SELECT 
+listings.id,
+listings.price
+FROM listings
+WHERE listings.price < 58
+)
+
+SELECT
+	MonthlyReviews.Month,
+	Count(MonthlyReviews.reviews_total) as reviews_total
+FROM 
+	CheapPlaces
+JOIN 
+	MonthlyReviews
+ON
+	CheapPlaces.id = MonthlyReviews.listing_id
+GROUP BY 1
+ORDER BY reviews_total
