@@ -1,0 +1,98 @@
+-- 1. What are the three longest trips on rainy days?
+WITH 
+rainydays
+AS(
+SELECT ZIP,Date
+FROM weather
+WHERE Events like 'Rain'
+GROUP BY 1
+)
+
+SELECT
+trips.trip_id,
+trips.duration,
+trips.zip_code,
+DATE(trips.start_date) trip_date
+FROM
+trips
+JOIN
+rainydays
+ON rainydays.Date = trip_date
+ORDER BY duration DESC
+LIMIT 3
+   
+-- 2. Which station is full most often?
+WITH 
+nodocks
+AS(
+SELECT 
+station_id, 
+COUNT(CASE WHEN docks_available = 0 then 1 END) as "full_dock"
+FROM status
+Group by 1
+)
+
+SELECT
+nodocks.full_dock,
+stations.station_id,
+stations.name
+from
+stations
+JOIN 
+nodocks
+on stations.station_id = nodocks.station_id
+GROUP BY 2,3
+ORDER BY full_dock DESC
+
+-- 3. Return a list of stations with a count of number of trips starting at that station but ordered by dock count.
+WITH
+stationcount
+AS(
+SELECT
+start_station,
+count(start_station) trip_count
+FROM 
+trips
+GROUP BY 1
+)
+
+SELECT
+stations.name,
+stations.dockcount,
+stationcount.trip_count
+FROM 
+stations
+JOIN 
+stationcount
+ON
+stations.name = stationcount.start_station
+GROUP BY 1
+ORDER BY dockcount desc
+
+-- 4. What's the length of the longest trip for each day it rains anywhere?
+WITH 
+rainydays
+AS(
+SELECT Date
+FROM weather
+WHERE Events = 'Rain'
+),
+
+rain_trips 
+AS(
+SELECT
+DATE(trips.start_date) trip_date,
+trips.duration
+FROM
+trips
+JOIN
+rainydays
+ON rainydays.Date = trip_date
+)
+
+SELECT 
+trip_date,
+max(duration)
+FROM rain_trips
+GROUP BY 1
+ORDER BY duration DESC
