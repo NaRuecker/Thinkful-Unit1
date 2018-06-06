@@ -1,0 +1,21 @@
+1. Does a new supplement help people sleep better?
+    Find people that are representative of the population. 
+    Devide them into  two equal groups, one that will receive 
+    the old drug and one that will receive the new drug.
+    Measure the duration and quality of each individual's sleep.
+ 
+2. Will new uniforms help a gym's business?
+I can image two different version:
+    1. If a gym chain has multiple locations, change the uniforms only in some.
+        Compare business key performance indicators (kpis) of gym's with and withour the new uniforms.
+    2. If the gym is not chain.
+        Try how the business kpis behave if the employees wear the new uniform versus 
+        the old ones at different times.
+        March new uniforms, April old uniforms. Or change on a weekly basis.
+
+3. Will a new homepage improve my online exotic pet rental business?
+    Display the different versions of the homepage to clients at random, check which customers buy more.
+    If this is not possible, switch to new homepage for a certain amout of time and check kpis.
+4. If I put 'please read' in the email subject will more people read my emails?
+    Send email with different subjects to random people. The email should indicate something that people need to do, click a link for example.
+    Measure if people who received the "Please read subject email" are more likely to perform the task. 
